@@ -1,4 +1,4 @@
-# hunter_dog
+# hunter-dog
 Web scraping to collect datas of corporate properties
 
 This is script to get information aboud coporate properties using datas of home page  https://fiis.com.br/
