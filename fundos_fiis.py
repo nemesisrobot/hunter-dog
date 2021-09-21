@@ -2,7 +2,8 @@ from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 from bs4 import BeautifulSoup
 from lib.constantes_sistema import *
-
+from lib.analise_fundos import *
+import pandas as pd
 
 #pegando todos os fiis
 lista_fiis=[]
@@ -80,10 +81,10 @@ for fii in lista_fiis:
     CONTADOR=CONTADOR+1
 
 
-
-
 #fechando escrita no arquivo
 fechar_arquivo(arquivo)
 
+regras = FundosRegras()
+regras.aplica_regas_gera_realtorio(CarregarDados.carrega_dados("base_fiis.csv","|","ISO-8859-1"))
 
 
