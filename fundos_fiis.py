@@ -1,30 +1,15 @@
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 from bs4 import BeautifulSoup
+from lib.constantes_sistema import *
 
-#dados para requisição
-header = {
-     'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36'
-    }
 
-url = "https://www.fundamentus.com.br/detalhes.php?papel="
-
-#lista de fiis
-lista_fiis = ['ATSA11','ABCP11','AFCR11','AFHI11','AFOF11','AIEC11','ALMI11','ALZR11','ANCR11B','ARFI11B','ARRI11','ATCR11']
-lista_fiis.append('BARI11')
-lista_fiis.append('BBFI11B')
-lista_fiis.append('BBFO11')
-lista_fiis.append('BBIM11')
-lista_fiis.append('BBPO11')
-lista_fiis.append('BBRC11')
-lista_fiis.append('BCFF11')
-lista_fiis.append('BCIA11')
-lista_fiis.append('BCRI11')
-lista_fiis.append('BICE11')
-lista_fiis.append('BICR11')
-lista_fiis.append('BLCP11')
-lista_fiis.append('BLMC11')
-lista_fiis.append('BLMG11')
+#pegando todos os fiis
+lista_fiis=[]
+fiis_html = BeautifulSoup(urlopen(Request('{}'.format(URL_FUNDS_EXPLORER),headers = HEADER)), 'html.parser')
+html_puro_fiis = fiis_html.findAll("span",{"class":"symbol"})
+for fiis in html_puro_fiis:
+    lista_fiis.append(fiis.getText())
 
 #definindo colunas dos fis
 colunas_csv = '{}|{}|{}|{}|{}|{}|{}|{}|{}'.format("FII","Cotação","Empresa","Data Atualização","Segmento",\
@@ -62,7 +47,7 @@ for fii in lista_fiis:
     
 
     try:
-        dados = Request('{}{}'.format(url,fii),headers = header)
+        dados = Request('{}{}'.format(URL_FUNDAMENTUS,fii),headers = HEADER)
         resposta= urlopen(dados)
         lista_dados = []
 
