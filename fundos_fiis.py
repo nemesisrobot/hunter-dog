@@ -1,8 +1,8 @@
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 from bs4 import BeautifulSoup
-from lib.constantes_sistema import *
-from lib.analise_fundos import *
+from script.constantes_sistema import *
+from script.analise_fundos import *
 import pandas as pd
 
 #pegando todos os fiis
