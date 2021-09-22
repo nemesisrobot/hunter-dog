@@ -13,8 +13,9 @@ for fiis in html_puro_fiis:
     lista_fiis.append(fiis.getText())
 
 #definindo colunas dos fis
-colunas_csv = '{}|{}|{}|{}|{}|{}|{}|{}|{}'.format("FII","Cotação","Empresa","Data Atualização","Segmento",\
-                                                  "Div. Yield","Dividendo/cota","Cap Rate","Vacância Média")
+colunas_csv = '{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}'.format("FII","Cotação","Empresa","Data Atualização","Segmento",\
+                                                  "Div. Yield","Dividendo/cota","Cap Rate","Vacância Média",\
+                                                 "P/VP","Qtd Imoveis","Qtd Cotas","liquidez")
 
 #metodo para gerar arquivo csv
 def gera_csv():
@@ -62,7 +63,7 @@ for fii in lista_fiis:
                 lista_dados.append(dado.getText())
 
         #escrevendo conteudo
-        conteudo_arquivo = '{}|{}|{}|{}|{}|{}|{}|{}|{}'.format(lista_dados[2]\
+        conteudo_arquivo = '{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}'.format(lista_dados[2]\
                              ,lista_dados[4]\
                              ,(lista_dados[6]).replace(',','.')\
                              ,lista_dados[8]\
@@ -70,7 +71,11 @@ for fii in lista_fiis:
                              ,((lista_dados[40]).replace(',','.')).replace('%','')\
                              ,(lista_dados[42]).replace(',','.')\
                              ,(((lista_dados[94]).replace(',','.')).replace('%','')).replace('-','0')\
-                             ,((lista_dados[100]).replace(',','.')).replace('%','')).replace('-','0')
+                             ,(((lista_dados[100]).replace(',','.')).replace('%','')).replace('-','0')\
+                             ,lista_dados[46].replace(',','.')\
+                             ,lista_dados[90]\
+                             ,lista_dados[24]\
+                             ,lista_dados[20].replace('.',''))
 
         escreve(arquivo,conteudo_arquivo)
     except HTTPError:
