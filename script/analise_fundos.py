@@ -3,6 +3,7 @@
 #Descrição:Script para tratar dados e aplica regras em cima dos fundos imobiliarios
 
 import pandas as pd
+import numpy as np
 
 #classe para carregar dados
 class CarregarDados:
@@ -35,7 +36,8 @@ class FundosRegras:
         for dados in lista_fiis:
             dados = dados.query("vacancia < 2")
             dados = dados.query("div_yield > 1 and cap_rate > 1")
-            dados = dados.query("p_vp < 1 and liquidez > 500000")
+            dados = dados[dados['p_vp'].astype(float) < 1]
+            dados = dados.query("liquidez > 500000")
 
             print("Gerando relatório de do seguimento: {}".format(dados['segmento'].unique()))
             dados.columns=["fii","cotacao","empresa","data","segmento","dividend_yield %","valor_dividendo_cota","cap_rate %","vacancia %","P/VP","Qtd Imoveis","Nº de Cotas","liquidez"]
