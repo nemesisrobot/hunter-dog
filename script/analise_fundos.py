@@ -35,9 +35,9 @@ class FundosRegras:
         #aplicando regras e gerando relatorios
         for dados in lista_fiis:
             dados = dados.query("vacancia < 2")
-            dados = dados.query("div_yield > 1 and cap_rate > 1")
-            dados = dados[dados['p_vp'].astype(float) < 1]
-            dados = dados.query("liquidez > 500000")
+            dados = dados.query("liquidez > 200000")
+            dados['cotacao'] = dados['cotacao'].str.replace(',','.')
+            dados = dados[dados['cotacao'].astype(float) < 110]
 
             print("Gerando relatório de do seguimento: {}".format(dados['segmento'].unique()))
             dados.columns=["fii","cotacao","empresa","data","segmento","dividend_yield %","valor_dividendo_cota","cap_rate %","vacancia %","P/VP","Qtd Imoveis","Nº de Cotas","liquidez"]
