@@ -36,10 +36,10 @@ class FundosRegras:
         for dados in lista_fiis:
             dados = dados.query("vacancia < 2")
             dados = dados.query("liquidez > 200000")
-            dados['cotacao'] = dados['cotacao'].str.replace(',','.')
-            dados = dados[dados['cotacao'].astype(float) < 110]
-
+            
             print("Gerando relatório de do seguimento: {}".format(dados['segmento'].unique()))
             dados.columns=["fii","cotacao","empresa","data","segmento","dividend_yield %","valor_dividendo_cota","cap_rate %","vacancia %","P/VP","Qtd Imoveis","Nº de Cotas","liquidez"]
             dados.to_excel("export_lista_fiis_investimentos{}.xlsx".format(dados['segmento'].unique()))
 
+regras = FundosRegras()
+regras.aplica_regas_gera_realtorio(CarregarDados.carrega_dados("base_fiis.csv","|","ISO-8859-1"))
