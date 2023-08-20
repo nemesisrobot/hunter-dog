@@ -20,7 +20,15 @@ class CarregarDados:
 #classe de regras
 class FundosRegras:
 
+    def __init__(self,vacancia,minpvp,maxpvp,liquidez,statuscollector):
+        self.vacancia = vacancia
+        self.minpvp = minpvp
+        self.maxpvp = maxpvp
+        self.liquidez = liquidez
+        self.statuscollector = statuscollector
+
     def aplica_regas_gera_realtorio(self, dados):
+        self.statuscollector["text"]="Status:Analisando Dados"
         #pegando segmentos para analise de fiis e gerando sub bases para analise
         segmentos = dados["segmento"].unique()
         
@@ -34,10 +42,13 @@ class FundosRegras:
 
         #aplicando regras e gerando relatorios
         for dados in lista_fiis:
-            dados = dados.query("vacancia < 2")
-            dados = dados.query("liquidez > 200000")
+            dados = dados.query(f"vacancia < {self.vacancia}")
+            dados = dados.query(f"liquidez > {self.liquidez}")
+            dados = dados.query(f"p_vp >= {self.minpvp} and p_vp <={self.maxpvp}")
             
             print("Gerando relatório de do seguimento: {}".format(dados['segmento'].unique()))
             dados.columns=["fii","cotacao","empresa","data","segmento","dividend_yield %","valor_dividendo_cota","cap_rate %","vacancia %","P/VP","Qtd Imoveis","Nº de Cotas","liquidez"]
             dados.to_excel("export_lista_fiis_investimentos{}.xlsx".format(dados['segmento'].unique()))
+        
+        self.statuscollector["text"]="Status:Concluido"
 
